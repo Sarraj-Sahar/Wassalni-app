@@ -395,12 +395,7 @@ class DemoToggleButtons extends StatefulWidget {
 
 class _DemoToggleButtonsState extends State<DemoToggleButtons> {
   //set the initial state of each button whether it is selected or not
-  /* List<bool> isSelected = [true, false, false];
-  List<IconData> iconList = [
-    Icons.train,
-    Icons.directions_bus,
-    Icons.local_taxi,
-  ];*/
+
   bool pressAttention = false;
   bool pressAttention2 = false;
   bool pressAttention3 = false;
@@ -454,3 +449,72 @@ class _DemoToggleButtonsState extends State<DemoToggleButtons> {
     );
   }
 }
+
+/* Ici c'est la classe des toggle buttons qu'on veut utiliser : works by itself but not with the draggable widget */
+/*class DemoToggleButtons extends StatefulWidget {
+  @override
+  _DemoToggleButtonsState createState() => _DemoToggleButtonsState();
+}
+
+class _DemoToggleButtonsState extends State<DemoToggleButtons> {
+  //set the initial state of each button whether it is selected or not
+  List<bool> isSelected = [true, false, false];
+  List<IconData> iconList = [
+    Icons.train,
+    Icons.directions_bus,
+    Icons.local_taxi,
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    //wrap the GridView wiget in an Ink wiget and set the width and height,
+    //otherwise the GridView widget will fill up all the space of its parent widget
+    return Ink(
+      width: 300,
+      height: 80,
+      color: Colors.transparent,
+      child: GridView.count(
+        primary: true,
+        crossAxisCount: 3, //set the number of buttons in a row
+        crossAxisSpacing: 35, //set the spacing between the buttons
+        childAspectRatio: 1, //set the width-to-height ratio of the button,
+        //>1 is a horizontal rectangle
+        children: List.generate(isSelected.length, (index) {
+          //using Inkwell widget to create a button
+          return InkWell(
+              splashColor: Colors.red[200], //the default splashColor is grey
+              onTap: () {
+                //set the toggle logic
+                setState(() {
+                  for (int indexBtn = 0;
+                      indexBtn < isSelected.length;
+                      indexBtn++) {
+                    if (indexBtn == index) {
+                      isSelected[indexBtn] = !isSelected[indexBtn];
+                    } else {
+                      isSelected[indexBtn] = false;
+                    }
+                  }
+                });
+              },
+              child: Ink(
+                decoration: BoxDecoration(
+                  //set the background color of the button when it is selected/ not selected
+                  color:
+                      isSelected[index] ? Colors.red[200] : Color(0xFFDEE3F1),
+                  // here is where we set the rounded corner
+                  borderRadius: BorderRadius.circular(8),
+                  //don't forget to set the border,
+                  //otherwise there will be no rounded corner
+                  border: Border.all(color: Colors.white),
+                ),
+                child: Icon(iconList[index],
+                    //set the color of the icon when it is selected/ not selected
+                    color: isSelected[index] ? Colors.white : Colors.black),
+              ));
+        }),
+      ),
+    );
+  }
+}
+ */
