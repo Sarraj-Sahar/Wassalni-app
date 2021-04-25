@@ -345,33 +345,31 @@ class _Date_pickerState extends State<Date_picker> {
   }
 }
 
-class TabBarDemo extends StatelessWidget {
+class SecondUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
-              ],
-            ),
-            title: Text('Tabs Demo'),
-          ),
-          body: TabBarView(
-            children: [
-              Icon(Icons.directions_car),
-              Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-            ],
-          ),
-        ),
-      ),
-    );
+    return Scaffold(
+        body: Container(
+            child: DraggableScrollableSheet(
+                initialChildSize: 0.60,
+                maxChildSize: 0.7,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50),
+                        ),
+                      ),
+                      child: Stack(children: <Widget>[
+                        ListView(
+                            padding: EdgeInsets.all(20),
+                            controller: scrollController,
+                            children: [])
+                      ]));
+                })));
   }
 }
 
