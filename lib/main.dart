@@ -103,82 +103,94 @@ class MyApp extends StatelessWidget {
                   ],
                 ),
               ),
-              DraggableScrollableSheet(
-                initialChildSize: 0.60,
-                maxChildSize: 0.7,
-                builder:
-                    (BuildContext context, ScrollController scrollController) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
-                      ),
-                    ),
-                    child: Stack(
-                      children: <Widget>[
-                        ListView(
-                          padding: EdgeInsets.all(20),
-                          controller: scrollController,
-                          children: [
-                            Text(
-                              'وين على خير؟',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontFamily: 'Amiri',
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            MyForm(),
-                            Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.only(top: 5.0),
-                              width: 50,
-                              height: 70,
-                              child: Date_picker(),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(bottom: 20.0),
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: SizedBox(
-                                width: 300,
-                                height: 55,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(30)),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SecondRoute()),
-                                    );
-                                  },
-                                  child: Text(
-                                    "يلّا بينا",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              MyDroggable(),
             ],
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       ),
+    );
+  }
+}
+
+class MyDroggable extends StatefulWidget {
+  @override
+  _MyDroggableState createState() => _MyDroggableState();
+}
+
+class _MyDroggableState extends State<MyDroggable> {
+  bool debut = true;
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.60,
+      maxChildSize: 0.7,
+      builder: (BuildContext context, ScrollController scrollController) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50),
+              topRight: Radius.circular(50),
+            ),
+          ),
+          child: !debut
+              ? SecondRoute()
+              : Stack(
+                  children: <Widget>[
+                    ListView(
+                      padding: EdgeInsets.all(20),
+                      controller: scrollController,
+                      children: [
+                        Text(
+                          'وين على خير؟',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: 'Amiri',
+                              fontWeight: FontWeight.bold),
+                        ),
+                        MyForm(),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.only(top: 5.0),
+                          width: 50,
+                          height: 70,
+                          child: Date_picker(),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 20.0),
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: SizedBox(
+                            width: 300,
+                            height: 55,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  debut = false;
+                                });
+                              },
+                              child: Text(
+                                "يلّا بينا",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+        );
+      },
     );
   }
 }
@@ -345,39 +357,10 @@ class _Date_pickerState extends State<Date_picker> {
   }
 }
 
-class SecondUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            child: DraggableScrollableSheet(
-                initialChildSize: 0.60,
-                maxChildSize: 0.7,
-                builder:
-                    (BuildContext context, ScrollController scrollController) {
-                  return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
-                        ),
-                      ),
-                      child: Stack(children: <Widget>[
-                        ListView(
-                            padding: EdgeInsets.all(20),
-                            controller: scrollController,
-                            children: [])
-                      ]));
-                })));
-  }
-}
-
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
+    return Container(
       child: Stack(children: [
         Positioned(
           top: 30,
@@ -397,11 +380,11 @@ class SecondRoute extends StatelessWidget {
         ),
         Positioned(
           left: 40,
-          top: 60,
+          top: 50,
           child: DemoToggleButtons(),
         )
       ]),
-    ));
+    );
   }
 }
 
@@ -412,61 +395,61 @@ class DemoToggleButtons extends StatefulWidget {
 
 class _DemoToggleButtonsState extends State<DemoToggleButtons> {
   //set the initial state of each button whether it is selected or not
-  List<bool> isSelected = [true, false, false];
+  /* List<bool> isSelected = [true, false, false];
   List<IconData> iconList = [
     Icons.train,
     Icons.directions_bus,
     Icons.local_taxi,
-  ];
+  ];*/
+  bool pressAttention = false;
+  bool pressAttention2 = false;
+  bool pressAttention3 = false;
 
   @override
   Widget build(BuildContext context) {
     //wrap the GridView wiget in an Ink wiget and set the width and height,
     //otherwise the GridView widget will fill up all the space of its parent widget
-    return Ink(
-      width: 300,
-      height: 80,
-      color: Colors.transparent,
-      child: GridView.count(
-        primary: true,
-        crossAxisCount: 3, //set the number of buttons in a row
-        crossAxisSpacing: 35, //set the spacing between the buttons
-        childAspectRatio: 1, //set the width-to-height ratio of the button,
-        //>1 is a horizontal rectangle
-        children: List.generate(isSelected.length, (index) {
-          //using Inkwell widget to create a button
-          return InkWell(
-              splashColor: Colors.red[200], //the default splashColor is grey
-              onTap: () {
-                //set the toggle logic
-                setState(() {
-                  for (int indexBtn = 0;
-                      indexBtn < isSelected.length;
-                      indexBtn++) {
-                    if (indexBtn == index) {
-                      isSelected[indexBtn] = !isSelected[indexBtn];
-                    } else {
-                      isSelected[indexBtn] = false;
-                    }
-                  }
-                });
-              },
-              child: Ink(
-                decoration: BoxDecoration(
-                  //set the background color of the button when it is selected/ not selected
-                  color:
-                      isSelected[index] ? Colors.red[200] : Color(0xFFDEE3F1),
-                  // here is where we set the rounded corner
-                  borderRadius: BorderRadius.circular(8),
-                  //don't forget to set the border,
-                  //otherwise there will be no rounded corner
-                  border: Border.all(color: Colors.white),
-                ),
-                child: Icon(iconList[index],
-                    //set the color of the icon when it is selected/ not selected
-                    color: isSelected[index] ? Colors.white : Colors.black),
-              ));
-        }),
+    return Container(
+      //padding: EdgeInsets.only(bottom: 200),
+      width: 350,
+      height: 300,
+      alignment: Alignment.topCenter,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          RaisedButton(
+            child: Icon(Icons.train),
+            textColor: Colors.white,
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(18.0),
+            ),
+            color: pressAttention ? Color(0xFFDEE3F1) : Colors.red[200],
+            onPressed: () => setState(() => pressAttention = !pressAttention),
+          ),
+          Spacer(),
+          RaisedButton(
+            child: Icon(Icons.directions_bus),
+            textColor: Colors.black,
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(20.0),
+            ),
+            color: pressAttention2 ? Color(0xFFDEE3F1) : Colors.red[200],
+            disabledTextColor: pressAttention2 ? Colors.white : Colors.black,
+            onPressed: () => setState(() => pressAttention2 = !pressAttention2),
+          ),
+          Spacer(),
+          RaisedButton(
+            child: Icon(Icons.local_taxi),
+            textColor: Colors.white,
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(15.0),
+            ),
+            color: pressAttention3 ? Color(0xFFDEE3F1) : Colors.red[200],
+            onPressed: () => setState(() => pressAttention3 = !pressAttention3),
+          ),
+        ],
       ),
     );
   }
